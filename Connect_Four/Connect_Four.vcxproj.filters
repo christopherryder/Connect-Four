@@ -24,9 +24,6 @@
     <ClInclude Include="Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Move_Manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Move_Evaluator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

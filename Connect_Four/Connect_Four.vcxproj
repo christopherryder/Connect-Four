@@ -154,7 +154,6 @@
     <ClInclude Include="Player_List.hpp" />
     <ClInclude Include="Position.hpp" />
     <ClInclude Include="Move.hpp" />
-    <ClInclude Include="Move_Manager.hpp" />
     <ClInclude Include="Position_Evaluator.hpp" />
   </ItemGroup>
   <ItemGroup>
