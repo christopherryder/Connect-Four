@@ -144,8 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Board.hpp" />
+    <ClInclude Include="End_Evaluator.hpp" />
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="Move_Evaluator.hpp" />
     <ClInclude Include="Move_List.hpp" />
     <ClInclude Include="Perspective.hpp" />
     <ClInclude Include="Player.hpp" />
@@ -158,9 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="End_Evaluator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Move_Evaluator.cpp" />
     <ClCompile Include="Player_List.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Position_Evaluator.cpp" />

@@ -33,15 +33,6 @@ int Position_Evaluator::Wrapped_Position_Evaluator::evaluate(Move const& move)
 	* by the ACTUAL current player or the current player in the search.
 	*/
 
-	switch (m_position.evaluate_move(move))
-	{
-	case Position::Evaluation::Winning_Move:
-		return m_base_win_value;
-
-	case Position::Evaluation::Drawing_Move:
-		return m_base_draw_value;
-	}
-
 	return 0;
 }
 
