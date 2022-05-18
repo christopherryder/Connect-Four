@@ -9,37 +9,70 @@
 
 class Move_List
 {
+private:
+
+	using container = typename std::vector<Move>;
+
+	struct Const_Iterator
+	{
+		using iterator_concept = std::contiguous_iterator_tag;
+
+		using value_type = typename container::value_type;
+		using difference_type = typename container::difference_type;
+		using const_pointer = typename container::const_pointer;
+		using const_reference = value_type const&;
+
+		constexpr Const_Iterator() noexcept : m_pointer(), m_parent() {}
+		constexpr Const_Iterator(const_pointer p, Move_List const* parent) : m_pointer(p), m_parent(parent) {}
+
+		constexpr Const_Iterator& operator=(Const_Iterator const&) noexcept = default;
+
+		[[nodiscard]] constexpr const_reference operator*() const noexcept { return (*m_pointer); }
+		[[nodiscard]] constexpr const_pointer operator->() const noexcept { return m_pointer; }
+
+		constexpr Const_Iterator& operator++() noexcept { increment(); return (is_end() || is_valid()) ? (*this) : operator++(); }
+		constexpr Const_Iterator operator++(int) noexcept { Const_Iterator tmp = (*this);  ++(*this); return tmp; }
+
+		[[nodiscard]] constexpr bool operator==(Const_Iterator const& rhs) const noexcept { return (m_pointer == rhs.m_pointer); }
+		[[nodiscard]] constexpr std::strong_ordering operator<=>(Const_Iterator const& rhs) const noexcept { return (m_pointer <=> rhs.m_pointer); }
+
+	private:
+
+		constexpr bool is_valid() const noexcept { return m_parent->validate_move(*(*this)); }
+		constexpr bool is_begin() const noexcept { return ((*this) == m_parent->begin()); }
+		constexpr bool is_end() const noexcept { return ((*this) == m_parent->end()); }
+
+		constexpr Const_Iterator& increment() noexcept { ++m_pointer; return (*this); }
+		constexpr Const_Iterator& decrement() noexcept { --m_pointer; return (*this); }
+
+		const_pointer m_pointer;
+		Move_List const* m_parent;
+	};
+
 public:
 
-	using container_type = std::vector<Move>;
-	using iterator = container_type::iterator;
-	using const_iterator = container_type::const_iterator;
+	Move_List(const int move_offset, const int move_extent, std::initializer_list<Move> const& moves) : m_move_offset(move_offset), m_move_extent(move_extent), m_moves(moves) {}
+	Move_List() : Move_List(0, 0, {}) {}
 
-	Move_List(std::initializer_list<Move> const& moves) : m_moves(moves) {}
-	Move_List() : Move_List({}) {}
+	inline Move_List const& operator()(Perspective const& perspective) { set_perspective(perspective); return *this; }
 
-	void set_perspective(Perspective const& perspective) { std::for_each(m_moves.begin(), m_moves.end(), [perspective](Move& move) {move.m_controller = perspective.m_player_id; }); }
+	inline void apply_move(Move const& applied_move) { m_moves[applied_move.m_column].m_index += m_move_offset; }
+	inline void revert_move(Move const& reverted_move) { m_moves[reverted_move.m_column].m_index -= m_move_offset; }
 
-	// TODO: Techincally, in the interests of encapsulation one should remove the regular iterators, we don't really want anyone interacting with the Move_List outside of the manager.
-	inline constexpr iterator begin() { return m_moves.begin(); }
-	inline constexpr const_iterator begin() const { return m_moves.begin(); }
-
-	inline constexpr iterator end() { return m_moves.end(); }
-	inline constexpr const_iterator end() const { return m_moves.end(); }
+	constexpr Const_Iterator begin() const noexcept { return Const_Iterator(&m_moves.front(), this); }
+	constexpr Const_Iterator end() const noexcept { return Const_Iterator(&m_moves.front() + m_moves.size(), this); }
 
 	inline constexpr Move const& operator[](const int index) const { return m_moves[index]; }
 
 private:
 
-	friend class Move_Manager;
+	// TODO: This is kind of naughty, Move_List has a hardcoded game rule. Need to decouple here.
+	constexpr bool validate_move(const Move& move) const { return (move.m_index < m_move_extent); }
+	void set_perspective(Perspective const& perspective) { std::for_each(m_moves.begin(), m_moves.end(), [perspective](Move& move) {move.m_controller = perspective.m_player_id; }); }
 
-	// In the interests of encapsulation, we keep the mutable/non-mutable accessor members private and define the Move_Manager as a friend.
-	// Additionally, the impact of only exposing const_iterators means than any `retained' references of the underlying Move_List cannot be mutated
-	// by anyone other than the Move_Manager class.
-
-	inline constexpr Move& operator[](const int index) { return m_moves[index]; }
-
-	container_type m_moves{};
+	int m_move_offset{};
+	int m_move_extent{};
+	container m_moves{};
 };
 
 #endif

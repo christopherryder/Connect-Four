@@ -13,7 +13,7 @@ Move Position_Evaluator::Wrapped_Position_Evaluator::find_optimum_move()
 	constexpr int initial_alpha{ -std::numeric_limits<int>::max() };
 	constexpr int initial_beta{ +std::numeric_limits<int>::max() };
 
-	for (auto& move : m_position.moves())
+	for (auto const& move : m_position.moves())
 	{
 		int evaluation{ negamax(move, m_search_depth, 1, initial_alpha, initial_beta, +1) };
 
@@ -26,7 +26,7 @@ Move Position_Evaluator::Wrapped_Position_Evaluator::find_optimum_move()
 	return optimum_move.m_move;
 }
 
-int Position_Evaluator::Wrapped_Position_Evaluator::evaluate(Move const& move) const
+int Position_Evaluator::Wrapped_Position_Evaluator::evaluate(Move const& move)
 {
 	/*
 	* Because of the use of the `negamax' algorithm one never determines a losing move. The signedness of the move depends on whether the move is executed
@@ -45,7 +45,7 @@ int Position_Evaluator::Wrapped_Position_Evaluator::evaluate(Move const& move) c
 	return 0;
 }
 
-int Position_Evaluator::Wrapped_Position_Evaluator::negamax(Move& move, int depth, int ply_from_root, int alpha, int beta, int signedness)
+int Position_Evaluator::Wrapped_Position_Evaluator::negamax(Move const& move, int depth, int ply_from_root, int alpha, int beta, int signedness)
 {
 	// TODO: OR IS TERMINAL (I.e Game ending, Draw, Win).
 	if (depth == 0)
@@ -58,7 +58,7 @@ int Position_Evaluator::Wrapped_Position_Evaluator::negamax(Move& move, int dept
 	int evaluation{ -std::numeric_limits<int>::max() };
 
 	// Now we must evaluate each of the current moves in the position
-	for (Move& child_move : m_position.moves())
+	for (Move const& child_move : m_position.moves())
 	{
 		if (child_move.m_index < m_position.m_board.ssize())
 			continue;

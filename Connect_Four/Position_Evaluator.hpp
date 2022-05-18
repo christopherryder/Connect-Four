@@ -19,6 +19,41 @@
 #include "Move.hpp"
 #include "Position.hpp"
 
+// TODO: FUNCITFY! auto operator()(Postion const&) -> const Move; updates m_position, hm...  
+
+template <class Evaluation_Engine>
+struct Position_Evaluator_R
+{
+	Position_Evaluator_R(Evaluation_Engine const& engine) : m_engine(engine) {}
+
+	// Send a deep copy of the position object, to allow for mutation of a position-state that is NOT the current game.
+	inline Move operator()(Position const& position) { return m_engine(Position{ position }); }
+
+private:
+
+	Evaluation_Engine m_engine;
+};
+
+struct Negamax_Engine
+{
+	Negamax_Engine(int search_depth, bool use_alpha_beta, bool use_transposition_table)
+		: m_search_depth(search_depth), m_use_alpha_beta(use_alpha_beta), m_use_transposition_table(use_transposition_table) {}
+
+	inline Move operator()(Position& position) const { return evaluate_best_move(position); }
+
+private:
+
+	Move evaluate_best_move(Position& position) const;
+	int negamax(Position &position, Move const& move, int depth, int ply_from_root, int alpha, int beta);
+
+	int m_search_depth{};
+	bool m_use_alpha_beta{};
+	bool m_use_transposition_table{};
+
+	int m_base_draw_value{ 0 };
+	int m_base_win_value{ 1000 };
+};
+
 class Position_Evaluator
 {
 private:
@@ -43,8 +78,8 @@ private:
 			int m_evaluation{};
 		};
 
-		int evaluate(Move const& move) const;
-		int negamax(Move& move, int depth, int ply_from_root, int alpha, int beta, int signedness);
+		int evaluate(Move const& move);
+		int negamax(Move const& move, int depth, int ply_from_root, int alpha, int beta, int signedness);
 
 		Position m_position;
 

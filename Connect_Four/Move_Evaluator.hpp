@@ -18,7 +18,6 @@ public:
 
 	enum class Evaluation
 	{
-		Invalid_Move,
 		Winning_Move,
 		Drawing_Move,
 		Normal_Move
