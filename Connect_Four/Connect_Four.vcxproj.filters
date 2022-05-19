@@ -30,16 +30,10 @@
     <ClInclude Include="Position_Evaluator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Player_Interface.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player_AI.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player_List.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Perspective.hpp">
@@ -48,7 +42,10 @@
     <ClInclude Include="Move_List.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="End_Evaluator.hpp">
+    <ClInclude Include="Win_Evaluator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Board_Tag.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,13 +62,10 @@
     <ClCompile Include="Position_Evaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player_List.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="End_Evaluator.cpp">
+    <ClCompile Include="Win_Evaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,11 +1,12 @@
 #ifndef __MOVE_HPP__
 #define __MOVE_HPP__
 
+#include "Board_Tag.hpp"
+
 struct Move
 {
-	int m_column{};
 	int m_index{};
-	int m_controller{};
+	Board_Tag m_tag{};
 };
 
 #endif

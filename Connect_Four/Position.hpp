@@ -2,6 +2,7 @@
 #define __POSITION_HPP__
 
 #include "Board.hpp"
+#include "Board_Tag.hpp"
 #include "Move.hpp"
 #include "Perspective.hpp"
 #include "Move_List.hpp"
@@ -11,7 +12,7 @@ class Position
 public:
 
 	Position(Board const& board, Move_List const& moves, Perspective const& perspective) : m_board(board), m_move_list(moves), m_perspective(perspective) {}
-	Position(Board const& board, Move_List const& moves) : Position(board, moves, Perspective{ 0,1,2 }) {}
+	Position(Board const& board, Move_List const& moves) : Position(board, moves, Perspective{ Board_Tag::Player_1, Board_Tag::Player_2 }) {}
 
 	void make_move(Move const& move);
 	void unmake_move(Move const& move);
@@ -31,7 +32,7 @@ private:
 	* We also define a set of `read-only' accessor methods for use by the Position_Evaluator, mostly for QOL purposes.
 	*/
 
-	friend struct End_Evaluator;
+	friend struct Win_Evaluator;
 	friend class Position_Evaluator;
 
 	// In general I don't need to expose the default-constructible Position. only the Position_Evaluator requires it for the wrapper.

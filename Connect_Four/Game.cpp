@@ -7,27 +7,23 @@
 
 void Game::play()
 {
-	m_position.make_move(Move{ 0,0,1 });
-	m_position.make_move(Move{ 1,1,2 });
+	m_position.make_move(Move{ 10, Board_Tag::Player_1 });
+	m_position.make_move(Move{ 11,Board_Tag::Player_2 });
 
-	m_position.make_move(Move{ 0,7,1 });
-	m_position.make_move(Move{ 1,8,2 });
+	m_position.make_move(Move{ 19,Board_Tag::Player_1 });
+	m_position.make_move(Move{ 20,Board_Tag::Player_2 });
 
-	m_position.make_move(Move{ 2,2,1 });
-	m_position.make_move(Move{ 3,3,2 });
+	m_position.make_move(Move{ 12,Board_Tag::Player_1 });
+	m_position.make_move(Move{ 13,Board_Tag::Player_2 });
 
-	m_position.make_move(Move{ 2,9,1 });
-	m_position.make_move(Move{ 4,4,2 });
+	m_position.make_move(Move{ 21,Board_Tag::Player_1 });
+	m_position.make_move(Move{ 22,Board_Tag::Player_2 });
 
-	m_position.make_move(Move{ 2,16,1 });
-	m_position.make_move(Move{ 6,6,2 });
+	m_position.make_move(Move{ 30,Board_Tag::Player_1 });
+	m_position.make_move(Move{ 14,Board_Tag::Player_2 });
 
 	std::cout << "The board is currently:" << m_position.board() << '\n';
 
-	Position_Evaluator evaluator(1, 5, true, false);
-
-	Move optimum = evaluator(m_position).find_optimum_move();
-	std::cout << "The optimum move was found at index " << optimum.m_index << " in column " << optimum.m_column << ".\n";
 }
 
 

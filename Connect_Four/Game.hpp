@@ -6,6 +6,7 @@
 
 #include "Move.hpp"
 #include "Board.hpp"
+#include "Board_Tag.hpp"
 #include "Move_List.hpp"
 #include "Position.hpp"
 #include "Position_Evaluator.hpp"
@@ -15,19 +16,19 @@ class Game
 public:
 
 	using Move_Stack = std::stack<Move, std::vector<Move>>;
-	Game() : m_position({ make_board(), make_move_list() }) {}
+	Game() : m_position({ make_board2(), make_move_list() }) {}
 
 	void play();
 
 private:
 
-	inline const Board make_board() const { return Board(m_board_rows, m_board_columns); }
-	inline const Move_List make_move_list() const { return Move_List(0, 7, { Move{0,0,0 }, Move{ 1,1,0 }, Move{ 2,2,0 }, Move{3,3,0}, Move{4,4,0}, Move{5,5,0}, Move{6,6,0} }); }
+	inline const Board make_board2() const { return Board(m_board_rows, m_board_columns); }
+	inline const Move_List make_move_list() const { return Move_List(9, 9, { Move{9, Board_Tag{} }, Move{ 10,Board_Tag::Empty }, Move{ 11,Board_Tag::Empty }, Move{12,Board_Tag::Empty}, Move{13,Board_Tag::Empty}, Move{14,Board_Tag::Empty}, Move{15,Board_Tag::Empty}, Move{16,Board_Tag::Empty}, Move{17,Board_Tag{}} }); }
 
 private:
 
-	int m_board_rows{ 6 };
-	int m_board_columns{ 7 };
+	int m_board_rows{ 8 };
+	int m_board_columns{ 9 };
 	int m_required_streak{ 4 };
 
 	//Need players, etc.

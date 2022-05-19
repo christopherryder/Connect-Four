@@ -56,8 +56,8 @@ public:
 
 	inline Move_List const& operator()(Perspective const& perspective) { set_perspective(perspective); return *this; }
 
-	inline void apply_move(Move const& applied_move) { m_moves[applied_move.m_column].m_index += m_move_offset; }
-	inline void revert_move(Move const& reverted_move) { m_moves[reverted_move.m_column].m_index -= m_move_offset; }
+	inline void apply_move(Move const& applied_move) { find_move(applied_move).m_index += m_move_offset; }
+	inline void revert_move(Move const& reverted_move) { find_move(reverted_move).m_index -= m_move_offset; }
 
 	constexpr Const_Iterator begin() const noexcept { return Const_Iterator(&m_moves.front(), this); }
 	constexpr Const_Iterator end() const noexcept { return Const_Iterator(&m_moves.front() + m_moves.size(), this); }
@@ -68,7 +68,10 @@ private:
 
 	// TODO: This is kind of naughty, Move_List has a hardcoded game rule. Need to decouple here.
 	constexpr bool validate_move(const Move& move) const { return (move.m_index < m_move_extent); }
-	void set_perspective(Perspective const& perspective) { std::for_each(m_moves.begin(), m_moves.end(), [perspective](Move& move) {move.m_controller = perspective.m_player_id; }); }
+	void set_perspective(Perspective const& perspective) { std::for_each(m_moves.begin(), m_moves.end(), [perspective](Move& move) {move.m_tag = perspective.m_player; }); }
+
+	// TODO: This implies that all moves can be found need to check it isn't end().
+	Move& find_move(Move const& required_move) { return *std::find_if(m_moves.begin(), m_moves.end(), [required_move](Move const& move) {return(move.m_index == required_move.m_index); }); }
 
 	int m_move_offset{};
 	int m_move_extent{};
