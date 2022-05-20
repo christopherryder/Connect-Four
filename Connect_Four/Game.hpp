@@ -23,7 +23,7 @@ public:
 private:
 
 	inline const Board make_board2() const { return Board(m_board_rows, m_board_columns); }
-	inline const Move_List make_move_list() const { return Move_List(9, 9, { Move{9, Board_Tag{} }, Move{ 10,Board_Tag::Empty }, Move{ 11,Board_Tag::Empty }, Move{12,Board_Tag::Empty}, Move{13,Board_Tag::Empty}, Move{14,Board_Tag::Empty}, Move{15,Board_Tag::Empty}, Move{16,Board_Tag::Empty}, Move{17,Board_Tag{}} }); }
+	inline const Move_List make_move_list() const { return Move_List(9, (m_board_rows * m_board_columns), { Move{ 10,Board_Tag::Empty }, Move{ 11,Board_Tag::Empty }, Move{12,Board_Tag::Empty}, Move{13,Board_Tag::Empty}, Move{14,Board_Tag::Empty}, Move{15,Board_Tag::Empty}, Move{16,Board_Tag::Empty} }); }
 
 private:
 

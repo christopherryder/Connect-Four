@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Board.hpp" />
     <ClInclude Include="Board_Tag.hpp" />
+    <ClInclude Include="Functos.hpp" />
     <ClInclude Include="Win_Evaluator.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Move_List.hpp" />
