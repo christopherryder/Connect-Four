@@ -19,61 +19,54 @@
 #include "Move.hpp"
 #include "Position.hpp"
 
-// TODO: FUNCITFY! auto operator()(Postion const&) -> const Move; updates m_position, hm...  
-
 class Position_Evaluator
 {
 private:
+	template<typename T>
+	using observer_ptr = T*;
 
-	class Wrapped_Position_Evaluator
+	// My own little invention, the idea is you can sandwhich a function in ->make_move, ->unmake_move calls to ensure position validity.
+	template <typename Callable>
+	inline auto suppose_move(const int move, Callable callable) -> decltype(callable())
 	{
-	public:
-
-		Wrapped_Position_Evaluator(Position const& position, const int controller_id, const int search_depth, const bool use_alpha_beta_pruning, const bool use_transposition_table) :
-			m_position(position), m_controller_id(controller_id), m_search_depth(search_depth), m_use_alpha_beta_pruning(use_alpha_beta_pruning), m_use_transposition_table(use_transposition_table) {}
-
-		Move find_optimum_move();
-
-		// I want to use this for chaining purposes, imagine the syntax: evaluator(position).find_optimum_move();
-		inline Wrapped_Position_Evaluator& operator()(Position& position) { m_position = position; return *this; }
-
-	private:
-
-		struct Optimum_Move
+		if constexpr (std::is_void<decltype(callable())>::value)
 		{
-			Move m_move{};
-			int m_evaluation{};
-		};
+			m_position_ptr->make_move(move);
+			callable();
+			m_position_ptr->unmake_move(move);
+		}
+		else
+		{
+			m_position_ptr->make_move(move);
+			auto value{ callable() };
+			m_position_ptr->unmake_move(move);
 
-		int evaluate(Move const& move);
-		int negamax(Move const& move, int depth, int ply_from_root, int alpha, int beta, int signedness);
-
-		Position m_position;
-
-		int m_search_depth{ 8 };
-		bool m_use_alpha_beta_pruning{ true };
-		bool m_use_transposition_table{ false };
-
-		int m_controller_id{ 1 };
-		int m_neutral_controller_id{ 0 };
-
-		int m_base_draw_value{ 0 };
-		int m_base_win_value{ std::numeric_limits<int>::max() };
-	};
-
-	Wrapped_Position_Evaluator m_position_evaluator;
+			return value;
+		}
+	}
 
 public:
 
-	Position_Evaluator(const int controller_id, const int search_depth, const bool use_alpha_beta_pruning, const bool use_transposition_table) :
-		m_position_evaluator(Position{}, controller_id, search_depth, use_alpha_beta_pruning, use_transposition_table) {}
+	Position_Evaluator(observer_ptr<Position> position_ptr, const int search_depth, const bool use_alpha_beta_pruning, const bool use_transposition_table) :
+		m_position_ptr(position_ptr), m_search_depth(search_depth), m_use_alpha_beta_pruning(use_alpha_beta_pruning), m_use_transposition_table(use_transposition_table) {}
 
-	/*
-	* For the same chaining reasons as above. Additionally, this ensures no `stale' Position_Evaluators are left behind. One must always update the Evaluator with the current context before accessing it.
-	* In reality though the only calls to the Position_Evaluator should be from the AI class, which will recieve a fresh Position& every turn, so staleness shouldn't be an issue anyway.
-	*/
+	int find_optimum_move();
 
-	inline Wrapped_Position_Evaluator& operator()(Position& position) { return m_position_evaluator(position); }
+private:
+
+
+
+	constexpr int evaluate() const;
+	int negamax(int depth, int ply_from_root, int alpha, int beta);
+
+	int m_search_depth{ 8 };
+	bool m_use_alpha_beta_pruning{ true };
+	bool m_use_transposition_table{ false };
+
+	int m_base_draw_value{ 0 };
+	int m_base_win_value{ std::numeric_limits<int>::max() };
+
+	observer_ptr<Position> m_position_ptr;
 };
 
 #endif

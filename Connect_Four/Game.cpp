@@ -7,23 +7,53 @@
 
 void Game::play()
 {
-	m_position.make_move(Move{ 10, Board_Tag::Player_1 });
-	m_position.make_move(Move{ 11,Board_Tag::Player_2 });
 
-	m_position.make_move(Move{ 19,Board_Tag::Player_1 });
-	m_position.make_move(Move{ 20,Board_Tag::Player_2 });
+	std::cout << "The board is currently:" << m_position.debug_board() << '\n';
+	std::cout << "Current move indices:" << m_position.debug_move_manager() << '\n';
 
-	m_position.make_move(Move{ 12,Board_Tag::Player_1 });
-	m_position.make_move(Move{ 13,Board_Tag::Player_2 });
+	m_position.make_move(m_position.debug_move_manager()[0]);
+	m_position.make_move(m_position.debug_move_manager()[1]);
+	m_position.make_move(m_position.debug_move_manager()[2]);
+	m_position.make_move(m_position.debug_move_manager()[3]);
+	m_position.make_move(m_position.debug_move_manager()[4]);
+	m_position.make_move(m_position.debug_move_manager()[5]);
+	m_position.make_move(m_position.debug_move_manager()[6]);
 
-	m_position.make_move(Move{ 21,Board_Tag::Player_1 });
-	m_position.make_move(Move{ 22,Board_Tag::Player_2 });
+	std::cout << "The board is currently:" << m_position.debug_board() << '\n';
+	std::cout << "Current move indices:" << m_position.debug_move_manager() << '\n';
 
-	m_position.make_move(Move{ 30,Board_Tag::Player_1 });
-	m_position.make_move(Move{ 14,Board_Tag::Player_2 });
+	m_position.make_move(m_position.debug_move_manager()[0]);
+	m_position.make_move(m_position.debug_move_manager()[1]);
+	m_position.make_move(m_position.debug_move_manager()[2]);
+	m_position.make_move(m_position.debug_move_manager()[3]);
+	m_position.make_move(m_position.debug_move_manager()[4]);
+	m_position.make_move(m_position.debug_move_manager()[5]);
+	m_position.make_move(m_position.debug_move_manager()[6]);
 
-	std::cout << "The board is currently:" << m_position.board() << '\n';
+	std::cout << "The board is currently:" << m_position.debug_board() << '\n';
+	std::cout << "Current move indices:" << m_position.debug_move_manager() << '\n';
 
+	m_position.make_move(m_position.debug_move_manager()[0]);
+	m_position.make_move(m_position.debug_move_manager()[1]);
+	m_position.make_move(m_position.debug_move_manager()[2]);
+	m_position.make_move(m_position.debug_move_manager()[3]);
+	m_position.make_move(m_position.debug_move_manager()[4]);
+	m_position.make_move(m_position.debug_move_manager()[5]);
+	m_position.make_move(m_position.debug_move_manager()[6]);
+
+	std::cout << "The board is currently:" << m_position.debug_board() << '\n';
+	std::cout << "Current move indices:" << m_position.debug_move_manager() << '\n';
+
+	m_position.make_move(m_position.debug_move_manager()[1]);
+	m_position.make_move(m_position.debug_move_manager()[0]);
+
+
+	std::cout << "The board is currently:" << m_position.debug_board() << '\n';
+	std::cout << "Current move indices:" << m_position.debug_move_manager() << '\n';
+
+	Position_Evaluator eval(&m_position, 8, true, true);
+
+	std::cout << eval.find_optimum_move() << '\n';
 }
 
 
