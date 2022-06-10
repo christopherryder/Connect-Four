@@ -58,8 +58,8 @@ void print_result(Connect_Four::State const& state)
 
 int main(int argc, char* argv[])
 {
-	constexpr int player_1_search_depth{ 18 };
-	constexpr int player_2_search_depth{ 4 };
+	constexpr int player_1_search_depth{ 20 };
+	constexpr int player_2_search_depth{ 2 };
 
 	constexpr int playable_rows{ 6 };
 	constexpr int playable_columns{ 7 };
@@ -75,8 +75,6 @@ int main(int argc, char* argv[])
 	int ply{ 0 };
 	while (!connect_four.is_state_terminal())
 	{
-		std::cout << connect_four << '\n';
-
 		int search_depth = (ply % 2 == 0) ? player_1_search_depth : player_2_search_depth;
 		Token_Search token_search(connect_four, search_depth);
 
@@ -93,9 +91,9 @@ int main(int argc, char* argv[])
 		}
 
 		print_result(connect_four.get_state());
-		++ply;
-
+		std::cout << connect_four << '\n';
 		std::cout << "------------------------------------------------------------------------\n";
+		++ply;
 	}
 
 	std::cout << connect_four;

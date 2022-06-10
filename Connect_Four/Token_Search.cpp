@@ -28,6 +28,10 @@ Token Token_Search::find_optimum_move()
 	{
 		negamax(iterative_search_depth, 0, -std::numeric_limits<int>::max(), +std::numeric_limits<int>::max());
 		optimum = m_iterative_best_evaluated_token;
+
+		// If we have an evaluation, say 998 (i.e: can win in 2 forced moves MINIMUM), we don't need to search to any greater depth. 
+		if ((optimum.m_evaluation) >= (m_base_win_evaluation - iterative_search_depth))
+			break;
 	}
 
 	std::cout << "Found optimum token! [IDX=" << optimum.m_token.get_index() << ", EVALUATION=" << optimum.m_evaluation << ", EVALUATIONS=" << m_nodes_searched << ", TRANSPOSITIONS=" << m_transpositions << "]\n";

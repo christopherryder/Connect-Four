@@ -47,7 +47,7 @@ std::ostream& Connect_Four::stream(std::ostream& os) const
 	os << "The board is currently:\n" << m_board << "\nFor Player " << m_perspective.m_player << " Current Moves Are : ";
 	for (Token const& token : stackable_tokens())
 	{
-		os << "[VAL=" << m_perspective.m_player << ", IDX =" << token.get_stack_index() << "] ";
+		os << "[VAL=" << m_perspective.m_player << ", IDX=" << token.get_stack_index() << "] ";
 	}
 	os << '\n';
 	return os;
