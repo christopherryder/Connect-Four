@@ -1,15 +1,23 @@
 #ifndef __PERSPECTIVE_HPP__
 #define __PERSPECTIVE_HPP__
 
-#include "Board_Tag.hpp"
+// Lightweight aggregate for describing whose turn it is in a two player game.
+// TODO: It could be fun to generalise this to N players...
 
+template <typename T>
 struct Perspective
 {
-	Board_Tag m_player{};
-	Board_Tag m_enemy{};
+	using value_type = T;
 
-	// Use auto because I Keep changing the underlying representation of the board, (int, enum class, etc...)
-	inline void swap() { auto tmp{ m_player }; m_player = m_enemy; m_enemy = tmp; }
+	T m_player{};
+	T m_enemy{};
+
+	inline constexpr void swap() 
+	{ 
+		T tmp{ m_player }; 
+		m_player = m_enemy; 
+		m_enemy = tmp; 
+	}
 };
 
 #endif

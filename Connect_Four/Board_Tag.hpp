@@ -6,8 +6,8 @@
 enum class Board_Tag
 {
 	Border,
+	Origin,
 	Empty,
-
 	Player_1,
 	Player_2
 };
@@ -19,6 +19,10 @@ inline std::ostream& operator<<(std::ostream& os, Board_Tag const& tag)
 	{
 	case Board_Tag::Border:
 		os << '#';
+		break;
+
+	case Board_Tag::Origin:
+		os << '^';
 		break;
 
 	case Board_Tag::Empty:

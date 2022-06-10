@@ -148,23 +148,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Board.hpp" />
+    <ClInclude Include="Board_Implementation.hpp" />
     <ClInclude Include="Board_Tag.hpp" />
+    <ClInclude Include="Connect_Four.hpp" />
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="Move_List.hpp" />
-    <ClInclude Include="Move_Manager.hpp" />
+    <ClInclude Include="Observer_Ptr.hpp" />
     <ClInclude Include="Perspective.hpp" />
-    <ClInclude Include="Player_AI.hpp" />
-    <ClInclude Include="Player_Interface.hpp" />
-    <ClInclude Include="Position.hpp" />
-    <ClInclude Include="Move.hpp" />
-    <ClInclude Include="Position_Evaluator.hpp" />
+    <ClInclude Include="Token_Search.hpp" />
+    <ClInclude Include="Token.hpp" />
+    <ClInclude Include="Transposition_Table.hpp" />
+    <ClInclude Include="Zobrist_Atlas.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Connect_Four.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Position.cpp" />
-    <ClCompile Include="Position_Evaluator.cpp" />
+    <ClCompile Include="Token_Search.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
