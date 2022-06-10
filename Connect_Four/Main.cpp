@@ -58,6 +58,9 @@ void print_result(Connect_Four::State const& state)
 
 int main(int argc, char* argv[])
 {
+	constexpr int player_1_search_depth{ 18 };
+	constexpr int player_2_search_depth{ 4 };
+
 	constexpr int playable_rows{ 6 };
 	constexpr int playable_columns{ 7 };
 	constexpr int required_streak{ 4 };
@@ -66,7 +69,7 @@ int main(int argc, char* argv[])
 
 	std::cout << connect_four << '\n';
 
-	constexpr int number_of_seed_moves{ 7 };
+	constexpr int number_of_seed_moves{ 6 };
 	seed_game(connect_four, number_of_seed_moves);
 
 	int ply{ 0 };
@@ -74,7 +77,7 @@ int main(int argc, char* argv[])
 	{
 		std::cout << connect_four << '\n';
 
-		int search_depth = (ply % 2 == 0) ? 12 : 4;
+		int search_depth = (ply % 2 == 0) ? player_1_search_depth : player_2_search_depth;
 		Token_Search token_search(connect_four, search_depth);
 
 		Token optimum{ token_search.find_optimum_move() };

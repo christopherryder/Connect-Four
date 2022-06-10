@@ -30,7 +30,7 @@ Token Token_Search::find_optimum_move()
 		optimum = m_iterative_best_evaluated_token;
 	}
 
-	std::cout << "Found optimum token! [IDX=" << optimum.m_token.get_index() << ", EVALUATION=" << optimum.m_evaluation << ", TRANSPOSITIONS="<<m_transpositions<<"]\n";
+	std::cout << "Found optimum token! [IDX=" << optimum.m_token.get_index() << ", EVALUATION=" << optimum.m_evaluation << ", EVALUATIONS=" << m_nodes_searched << ", TRANSPOSITIONS=" << m_transpositions << "]\n";
 	return optimum.m_token;
 }
 
@@ -81,6 +81,8 @@ int Token_Search::negamax(int search_depth, int ply_from_root, int alpha, int be
 		m_connect_four.stack_token(token);
 		int position_optimum_evaluation = -negamax((search_depth - 1), (ply_from_root + 1), -beta, -alpha);
 		m_connect_four.unstack_token(token);
+
+		++m_nodes_searched;
 
 		if (position_optimum_evaluation >= beta)
 		{
