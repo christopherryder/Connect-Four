@@ -153,8 +153,10 @@
     <ClInclude Include="Connect_Four.hpp" />
     <ClInclude Include="Observer_Ptr.hpp" />
     <ClInclude Include="Perspective.hpp" />
+    <ClInclude Include="Token_Evaluator.hpp" />
     <ClInclude Include="Token_Search.hpp" />
     <ClInclude Include="Token.hpp" />
+    <ClInclude Include="Token_Sorter.hpp" />
     <ClInclude Include="Transposition_Table.hpp" />
     <ClInclude Include="Zobrist_Atlas.hpp" />
   </ItemGroup>

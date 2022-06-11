@@ -23,8 +23,10 @@ inline Token_Search::Evaluated_Token Token_Search::make_upper_bound_evaluated_to
 Token Token_Search::find_optimum_move()
 {
 	Evaluated_Token optimum{};
+	
+	int iterative_search_depth{ 1 };
 
-	for (int iterative_search_depth = 1; iterative_search_depth <= m_search_depth; ++iterative_search_depth)
+	for (iterative_search_depth; iterative_search_depth <= m_search_depth; ++iterative_search_depth)
 	{
 		negamax(iterative_search_depth, 0, -std::numeric_limits<int>::max(), +std::numeric_limits<int>::max());
 		optimum = m_iterative_best_evaluated_token;
@@ -34,7 +36,13 @@ Token Token_Search::find_optimum_move()
 			break;
 	}
 
-	std::cout << "Found optimum token! [IDX=" << optimum.m_token.get_index() << ", EVALUATION=" << optimum.m_evaluation << ", EVALUATIONS=" << m_nodes_searched << ", TRANSPOSITIONS=" << m_transpositions << "]\n";
+	std::cout << "Found optimum token! [SEARCH_DEPTH=" << iterative_search_depth << "/" << (m_search_depth + 1)
+		<< ", IDX=" << optimum.m_token.get_index()
+		<< ", EVALUATION=" << optimum.m_evaluation
+		<< ", EVALUATIONS=" << m_nodes_searched
+		<< ", TRANSPOSITIONS=" << m_transpositions
+		<< ", PRUNED_BRANCHES=" << m_branches_pruned << "]\n";
+
 	return optimum.m_token;
 }
 
